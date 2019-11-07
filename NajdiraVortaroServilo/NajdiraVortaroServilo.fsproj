@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Include="Data\Vortaro.fs" />
     <Compile Include="WeatherForecast.fs" />
+    <Compile Include="Controllers\SignifojController.fs" />
+    <Compile Include="Controllers\SerĉiController.fs" />
     <Compile Include="Controllers\VortojController.fs" />
     <Compile Include="Controllers/WeatherForecastController.fs" />
     <Compile Include="Startup.fs" />

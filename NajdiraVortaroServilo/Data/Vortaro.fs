@@ -37,3 +37,10 @@ let GetDictionary =
               Radikoj = r.Radikoj |> List.ofArray })
       return { Vortaro.Signifoj = signifoj; Vortoj = vortoj }
    }
+
+type IVortaro =
+   abstract member Vortaro : Vortaro
+
+type NormalaVortaro() =
+   interface IVortaro with
+      member _.Vortaro = GetDictionary |> Async.RunSynchronously

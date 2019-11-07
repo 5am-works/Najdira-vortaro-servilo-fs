@@ -13,12 +13,17 @@ type VortoInformo =
      Idoj : string array
    }
 
+type Nombroj =
+   { Vortoj : int
+     Signifoj : int
+   }
+
 [<ApiController>]
 [<Route("[controller]")>]
-type VortojController (logger:ILogger<VortojController>) =
+type VortojController (logger:ILogger<VortojController>, vortaro:IVortaro) =
    inherit ControllerBase()
 
-   let dictionary = GetDictionary |> Async.RunSynchronously
+   let dictionary = vortaro.Vortaro
 
    [<HttpGet("{vorto}")>]
    member this.Informi (vorto:string) : ActionResult =
@@ -45,3 +50,9 @@ type VortojController (logger:ILogger<VortojController>) =
            Radikoj = radikoj 
            Idoj = idoj } |> this.Ok :> ActionResult)
       |> Option.defaultValue (this.NotFound() :> ActionResult)
+
+   [<HttpGet("stats/nombroj")>]
+   member this.Nombroj() : ActionResult =
+      { Vortoj = dictionary.Vortoj.Length
+        Signifoj = dictionary.Signifoj.Length }
+      |> this.Ok :> ActionResult
